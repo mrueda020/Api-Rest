@@ -6,25 +6,21 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table
-public class Part {
+public class PartDTO {
 
-    @Id
-    @SequenceGenerator(name = "part_sequence", sequenceName = "part_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "part_sequence")
+
     private Long id;
 
-    @OneToMany(mappedBy = "part", cascade = CascadeType.REMOVE)
-    Set<Defect> defects = new HashSet<>();
+
+    private Set<Defect> defects = new HashSet<>();
 
     private String name;
 
-    public Part(){
+    public PartDTO(){
 
     }
 
-    public Part(Long id, String name) {
+    public PartDTO(Long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -44,5 +40,13 @@ public class Part {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Defect> getDefects() {
+        return defects;
+    }
+
+    public void setDefects(Set<Defect> defects) {
+        this.defects = defects;
     }
 }

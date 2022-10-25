@@ -25,14 +25,8 @@ public class PartController {
     }
 
     @GetMapping(path = "{partId}")
-    public ResponseEntity<Part> getPartById(@PathVariable("partId") Long partId){
-
-        Optional<Part> part = partService.getPartById(partId);
-        if(part.isPresent()){
-            return new ResponseEntity<Part>(part.get(), HttpStatus.OK);
-        }
-
-        return new ResponseEntity<Part>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<PartDTO> getPartById(@PathVariable("partId") Long partId){
+        return partService.getPartById(partId);
     }
 
     @DeleteMapping(path = "{partId}")

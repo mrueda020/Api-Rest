@@ -32,6 +32,26 @@ public class DefectService {
         return defects;
     }
 
+    public ResponseEntity<Defect> getDefect(Long id) {
+
+        try{
+            Optional<Defect> defect = defectRepository.findById(id);
+            if(defect.isEmpty()){
+                return new ResponseEntity("Defect not found", HttpStatus.NOT_FOUND);
+            }
+
+            return new ResponseEntity(defect.get(), HttpStatus.OK);
+
+        }
+        catch(Exception e) {
+            return new ResponseEntity("Server error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+
+
+    }
+
+
     public void addDefect(Defect defect) {
 
         setPartForDefect(defect.getPartId(), defect);

@@ -23,6 +23,11 @@ public class DefectController {
     }
 
 
+    @GetMapping(path="{defectId}")
+    public ResponseEntity<Defect> getDefect(@PathVariable("defectId") Long defectId){
+        return defectService.getDefect(defectId);
+    }
+
     @PostMapping
     public void addDefect(@RequestBody Defect defect){
         defectService.addDefect(defect);

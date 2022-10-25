@@ -1,50 +1,44 @@
 package com.example.demo.api.defect;
 
+
 import com.example.demo.api.inspection.Inspection;
 import com.example.demo.api.part.Part;
 
-import javax.persistence.*;
+
 import java.util.Date;
 
-@Entity
-@Table
-public class Defect {
+public class DefectDTO {
 
-    @Id
-    @SequenceGenerator(name = "defect_sequence", sequenceName = "defect_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "defect_sequence")
+
     public Long id;
 
-    @ManyToOne( cascade = CascadeType.REMOVE)
-    @JoinColumn(name="inspectionId")
     Inspection inspection;
 
-
-    @Transient
     private Long inspectionId;
 
-    @Transient
+
     private Long partId;
 
-    @ManyToOne
-    @JoinColumn(name="partId")
     Part part;
 
     public String status;
 
-    private String comments;
+    public String comments;
 
-    private Date createdDate;
+    public Date createdDate;
 
-    private Date repairedDate;
+    public Date repairedDate;
 
-    public Defect(){
 
+    public DefectDTO() {
     }
 
-    public Defect(Long id, Inspection inspection, Part part, String status, String comments, Date createdDate, Date repairedDate) {
+
+    public DefectDTO(Long id, Inspection inspection, Long inspectionId, Long partId, Part part, String status, String comments, Date createdDate, Date repairedDate) {
         this.id = id;
         this.inspection = inspection;
+        this.inspectionId = inspectionId;
+        this.partId = partId;
         this.part = part;
         this.status = status;
         this.comments = comments;
@@ -66,6 +60,22 @@ public class Defect {
 
     public void setInspection(Inspection inspection) {
         this.inspection = inspection;
+    }
+
+    public Long getInspectionId() {
+        return inspectionId;
+    }
+
+    public void setInspectionId(Long inspectionId) {
+        this.inspectionId = inspectionId;
+    }
+
+    public Long getPartId() {
+        return partId;
+    }
+
+    public void setPartId(Long partId) {
+        this.partId = partId;
     }
 
     public Part getPart() {
@@ -106,21 +116,5 @@ public class Defect {
 
     public void setRepairedDate(Date repairedDate) {
         this.repairedDate = repairedDate;
-    }
-
-    public Long getInspectionId() {
-        return inspectionId;
-    }
-
-    public void setInspectionId(Long inspectionId) {
-        this.inspectionId = inspectionId;
-    }
-
-    public Long getPartId() {
-        return partId;
-    }
-
-    public void setPartId(Long partId) {
-        this.partId = partId;
     }
 }
