@@ -14,7 +14,7 @@ public class Part {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "part_sequence")
     public Long id;
 
-    @OneToMany(mappedBy = "part")
+    @OneToMany(mappedBy = "part", cascade = CascadeType.REMOVE)
     Set<Defect> defects;
 
     public String name;

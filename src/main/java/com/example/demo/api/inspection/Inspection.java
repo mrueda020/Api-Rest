@@ -15,7 +15,7 @@ public class Inspection {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "inspection_sequence")
     private Long id;
 
-    @OneToMany(mappedBy = "inspection")
+    @OneToMany(mappedBy = "inspection",  cascade = CascadeType.REMOVE)
     Set<Defect> defects;
 
     private int vehiculeId;

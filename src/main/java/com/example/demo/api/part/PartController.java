@@ -42,7 +42,7 @@ public class PartController {
 
 
     @PutMapping(path = "{partId}")
-    public ResponseEntity<?> updatePart(@PathVariable("partId") Long partId, @RequestParam(required = false) String name){
+    public ResponseEntity<Part> updatePart(@PathVariable("partId") Long partId, @RequestParam(required = false) String name){
         return partService.updatePart(partId, name);
     }
 

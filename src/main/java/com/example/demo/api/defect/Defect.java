@@ -15,7 +15,7 @@ public class Defect {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "defect_sequence")
     public Long id;
 
-    @ManyToOne
+    @ManyToOne( cascade = CascadeType.REMOVE)
     @JoinColumn(name="inspectionId")
     Inspection inspection;
 

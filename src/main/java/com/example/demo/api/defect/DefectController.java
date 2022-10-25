@@ -1,6 +1,7 @@
 package com.example.demo.api.defect;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,5 +34,12 @@ public class DefectController {
         defectService.deleteDefect(defectId);
 
     }
+
+    @PutMapping(path="{defectId}")
+    public ResponseEntity<Defect> updateDefect(@PathVariable("defectId") Long id, @RequestBody Defect defect){
+        return defectService.updateDefect(id,defect);
+    }
+
+
 
 }

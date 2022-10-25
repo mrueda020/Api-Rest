@@ -52,7 +52,7 @@ public class PartService {
     }
 
     @Transactional
-    public ResponseEntity<?> updatePart(Long partId, String name) {
+    public ResponseEntity<Part> updatePart(Long partId, String name) {
         try {
             Optional<Part> part = partRepository.findById(partId);
             if(!part.isPresent()){

@@ -5,8 +5,11 @@ import com.example.demo.api.inspection.InspectionRepository;
 import com.example.demo.api.part.Part;
 import com.example.demo.api.part.PartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +44,7 @@ public class DefectService {
             Optional<Part> part = partRepository.findById(partId);
             if(part.isPresent()){
                 defect.setPart(part.get());
+                defect.setPartId(partId);
             }
         }
     }
@@ -50,6 +54,7 @@ public class DefectService {
             Optional<Inspection> inspection = inspectionRepository.findById(inspectionId);
             if(inspection.isPresent()){
                 defect.setInspection(inspection.get());
+                defect.setInspectionId(inspectionId);
             }
         }
     }
@@ -62,4 +67,34 @@ public class DefectService {
         }
         defectRepository.deleteById(defectId);
     }
+
+    @Transactional
+    public ResponseEntity<Defect> updateDefect(Long id, Defect defect) {
+        try{
+            Optional<Defect> defectBeforeEditing = defectRepository.findById(id);
+            if(defectBeforeEditing.isEmpty()){
+                return new ResponseEntity("Defect Not found",HttpStatus.NOT_FOUND);
+            }
+
+            Defect defect1 = defectBeforeEditing.get();
+            defect1.setInspectionId(defect.getInspectionId()!=null ? defect.getInspectionId(): defect1.getInspectionId());
+            defect1.setPartId(defect.getPartId()!=null ? defect.getPartId(): defect1.getInspectionId() );
+            defect1.setStatus(defect.getStatus()!=null && !defect.getStatus().isBlank()? defect.getStatus(): defect1.getStatus());
+            defect1.setComments(defect.getComments() !=null && !defect.getComments().isBlank()? defect.getComments(): defect1.getComments() );
+            defect1.setCreatedDate(defect.getCreatedDate()!=null? defect.getCreatedDate(): defect1.getCreatedDate() );
+            defect1.setRepairedDate(defect.getRepairedDate()!=null? defect.getRepairedDate(): defect1.getRepairedDate() );
+
+            setInspectionForDefect(defect.getInspectionId(), defect1);
+            setPartForDefect(defect.getPartId(), defect1);
+
+            return new ResponseEntity(defect1,HttpStatus.OK);
+
+        }
+        catch(Exception e){
+            System.out.println(e);
+            return new ResponseEntity("Server Error",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 }
