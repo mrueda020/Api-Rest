@@ -30,17 +30,17 @@ public class PartService {
         partRepository.save(part);
     }
 
-    public ResponseEntity<PartDTO> getPartById(Long id) {
+    public ResponseEntity<Part> getPartById(Long id) {
         try{
             Optional<Part> part = partRepository.findById(id);
             if(part.isPresent()){
                 PartDTO partDTO = new PartDTO(part.get().getId(),part.get().getName());
-                partDTO.setDefects(part.get().defects);
-                return new ResponseEntity<PartDTO>(partDTO, HttpStatus.OK);
+                partDTO.setDefects(part.get().getDefects());
+                return new ResponseEntity<Part>(part.get(), HttpStatus.OK);
             }
-            return new ResponseEntity<PartDTO>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Part>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
-            return new ResponseEntity<PartDTO>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Part>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

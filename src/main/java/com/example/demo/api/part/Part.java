@@ -1,6 +1,7 @@
 package com.example.demo.api.part;
 
 import com.example.demo.api.defect.Defect;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -15,8 +16,9 @@ public class Part {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "part_sequence")
     private Long id;
 
-    @OneToMany(mappedBy = "part", cascade = CascadeType.REMOVE)
-    Set<Defect> defects = new HashSet<>();
+    @JsonBackReference
+    @OneToMany(mappedBy = "part", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private Set<Defect> defects = new HashSet<>();
 
     private String name;
 
@@ -44,5 +46,13 @@ public class Part {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Defect> getDefects() {
+        return defects;
+    }
+
+    public void setDefects(Set<Defect> defects) {
+        this.defects = defects;
     }
 }

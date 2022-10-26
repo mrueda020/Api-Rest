@@ -25,7 +25,7 @@ public class PartController {
     }
 
     @GetMapping(path = "{partId}")
-    public ResponseEntity<PartDTO> getPartById(@PathVariable("partId") Long partId){
+    public ResponseEntity<Part> getPartById(@PathVariable("partId") Long partId){
         return partService.getPartById(partId);
     }
 
