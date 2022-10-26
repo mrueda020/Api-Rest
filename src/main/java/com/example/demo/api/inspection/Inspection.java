@@ -1,6 +1,7 @@
 package com.example.demo.api.inspection;
 
 import com.example.demo.api.defect.Defect;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,7 +17,8 @@ public class Inspection {
     private Long id;
 
     @OneToMany(mappedBy = "inspection",  cascade = CascadeType.REMOVE)
-    Set<Defect> defects;
+    @JsonBackReference
+    private Set<Defect> defects;
 
     private int vehiculeId;
 
@@ -76,5 +78,13 @@ public class Inspection {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public Set<Defect> getDefects() {
+        return defects;
+    }
+
+    public void setDefects(Set<Defect> defects) {
+        this.defects = defects;
     }
 }

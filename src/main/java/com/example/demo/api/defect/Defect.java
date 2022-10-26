@@ -2,6 +2,7 @@ package com.example.demo.api.defect;
 
 import com.example.demo.api.inspection.Inspection;
 import com.example.demo.api.part.Part;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.Date;
